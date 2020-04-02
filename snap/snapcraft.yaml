@@ -23,6 +23,8 @@ adopt-info: iotedge
 layout:
   /etc/docker:
     bind: $SNAP_DATA/etc/docker
+  /etc/iotedge:
+    bind: $SNAP_DATA/etc/iotedge
 
 plugs:
   home:
@@ -36,6 +38,8 @@ apps:
     plugs:
       - network
       - network-bind
+      - system-observe
+
   iotedged:
     command: usr/bin/iotedged -c $SNAP_DATA/etc/iotedge/config.yaml
     daemon: simple
