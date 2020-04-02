@@ -110,25 +110,15 @@ parts:
       # also make a lib{ssl,crypto}.so.1.0.2 symlink, as the iotedged binary has this
       # in its lib requirements
       # but the ubuntu archive packages only ship lib{ssl,crypto}.so.1.0.0
-      cd $SNAPCRAFT_PART_INSTALL
       # TODO: use the proper "target arch" env var this so could reasonably 
       # still be cross-compiled
-      case $(arch) in
-        x86_64)
-            MULTI_ARCH_PATH="x86_64-linux-gnu";;
-        arm*)
-            MULTI_ARCH_PATH="arm-linux-gnueabihf";;
-        aarch64)
-            MULTI_ARCH_PATH="aarch64-linux-gnu";;
-        *)
-            echo "architecture $ARCH not supported"
-            exit 1
-            ;;
-      esac
-      mkdir -p lib/$MULTI_ARCH_PATH
-      cd lib/$MULTI_ARCH_PATH
-      ln -s libcrypto.so.1.0.0 libcrypto.so.1.0.2
-      ln -s libssl.so.1.0.0 libssl.so.1.0.2
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}
+      ln -f -s libcrypto.so.1.0.0 \
+            ${SNAPCRAFT_PART_INSTALL}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/libcrypto.so.1.0.2
+      ln -f -s libssl.so.1.0.0 \
+            ${SNAPCRAFT_PART_INSTALL}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/libssl.so.1.0.2
+      version=$(${SNAPCRAFT_PART_INSTALL}/usr/bin/iotedge version | awk '{print $2}')
+      snapcraftctl set-version ${version}
 
   libiothsm:
     plugin: dump
