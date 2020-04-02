@@ -31,6 +31,16 @@ force_umount() {
 	yolo umount -l "$@"
 }
 
+# check if enough interfaces is connected to run
+# as minimum we want, docker-support, firewall-control, and home
+check_connected_interfaces() {
+  if ! snapctl is-connected docker-support || \
+     ! snapctl is-connected firewall-control ||\
+     ! snapctl is-connected home ; then
+       exit -1
+  fi
+}
+
 dir="$(mktemp -d)"
 trap "force_umount --no-mtab '$dir'; rm -rf '$dir'" EXIT
 # try mounting a few FS types to force the kernel to try loading modules
@@ -53,6 +63,8 @@ mkdir -p \
 	"$SNAP_DATA/run/docker" \
 	"$SNAP_COMMON/var-lib-docker" \
 	"$XDG_RUNTIME_DIR"
+
+check_connected_interfaces
 
 workaround_lp1606510
 
