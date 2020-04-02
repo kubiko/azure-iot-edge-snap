@@ -174,18 +174,29 @@ parts:
     source: https://github.com/docker/engine.git
     source-tag: v18.09.3
     source-depth: 1
+    override-pull: |
+      snapcraftctl pull
+      git apply \
+          --ignore-space-change \
+          --ignore-whitespace \
+          ${SNAPCRAFT_PROJECT_DIR}/dockerd-patches/*.patch
     override-build: |
       # docker build specific environment variables
-      export VERSION="18.09.03-ce"
+      export VERSION=$(git describe --tags  | cut -c 2-)
       export DOCKER_GITCOMMIT=$(git rev-parse --short HEAD)
       export GITCOMMIT=$DOCKER_GITCOMMIT
       export DISABLE_WARN_OUTSIDE_CONTAINER=1
-
-      # this patches the dockerd sources
-      . "$SNAPCRAFT_STAGE/bin/prep-dockerd-build.sh"
+      export BUILDTIME="$(date --rfc-3339 ns 2>/dev/null | sed -e 's/ /T/' || date -u)"
+      export DOCKER_BUILDTAGS=' \
+        apparmor \
+        seccomp \
+        selinux \
+      '
+      #	pkcs11
+      export AUTO_GOPATH=1
 
       # setup the go build environment for docker/engine
-      . $SNAPCRAFT_STAGE/bin/go-build-helper.sh
+      . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
       gopartbootstrap github.com/docker/engine
 
       # build the dockerd binary
