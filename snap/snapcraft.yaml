@@ -1,9 +1,9 @@
 name: azure-iot-edge-ijohnson
-summary: Extend cloud intelligence and analytics to edge devices 
-description: 
-  Azure IoT Edge is a fully managed service that delivers cloud intelligence 
-  locally by deploying and running artificial intelligence (AI), Azure 
-  services, and custom logic directly on cross-platform IoT devices. Run your 
+summary: Extend cloud intelligence and analytics to edge devices
+description:
+  Azure IoT Edge is a fully managed service that delivers cloud intelligence
+  locally by deploying and running artificial intelligence (AI), Azure
+  services, and custom logic directly on cross-platform IoT devices. Run your
   IoT solution securely and at scale—whether in the cloud or offline.
 
 
@@ -55,6 +55,7 @@ apps:
       mgmt:
         listen-stream: $SNAP_COMMON/run/mgmt.sock
         socket-mode: 0660
+
   docker:
     command: docker
     environment:
@@ -67,6 +68,7 @@ apps:
     plugs:
       - network
       - home
+
   dockerd:
     command: bin/dockerd
     command-chain:
@@ -104,7 +106,7 @@ apps:
 parts:
   iotedge:
     plugin: dump
-    source: 
+    source:
       - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb
       - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_armhf.deb
       - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_arm64.deb
@@ -115,7 +117,7 @@ parts:
       # also make a lib{ssl,crypto}.so.1.0.2 symlink, as the iotedged binary has this
       # in its lib requirements
       # but the ubuntu archive packages only ship lib{ssl,crypto}.so.1.0.0
-      # TODO: use the proper "target arch" env var this so could reasonably 
+      # TODO: use the proper "target arch" env var this so could reasonably
       # still be cross-compiled
       mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}
       ln -f -s libcrypto.so.1.0.0 \
@@ -127,7 +129,7 @@ parts:
 
   libiothsm:
     plugin: dump
-    source: 
+    source:
       - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_amd64.deb
       - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_armhf.deb
       - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_arm64.deb
