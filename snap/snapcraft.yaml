@@ -64,7 +64,9 @@ apps:
       - network
       - home
   dockerd:
-    command: bin/dockerd-wrapper.sh
+    command: bin/dockerd
+    command-chain:
+      - bin/dockerd-wrapper.sh
     daemon: simple
     plugs:
       - bluetooth-control

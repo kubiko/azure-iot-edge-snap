@@ -58,11 +58,10 @@ workaround_lp1606510
 
 workaround_apparmor_profile_reload
 
-exec dockerd \
+exec "$@" \
 	-G $default_socket_group \
 	-H "unix://$SNAP_COMMON/run/docker.sock" \
 	--exec-root="$SNAP_DATA/run/docker" \
 	--data-root="$SNAP_COMMON/var-lib-docker" \
 	--pidfile="$SNAP_DATA/run/docker.pid" \
-	--config-file="$SNAP_DATA/config/daemon.json" \
-	"$@"
+	--config-file="$SNAP_DATA/config/daemon.json"
