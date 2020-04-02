@@ -1,5 +1,4 @@
 name: azure-iot-edge-ijohnson
-version: '1.0.6.1'
 summary: Extend cloud intelligence and analytics to edge devices 
 description: 
   Azure IoT Edge is a fully managed service that delivers cloud intelligence 
@@ -19,6 +18,7 @@ architectures:
 grade: stable
 confinement: strict
 base: core18
+adopt-info: iotedge
 
 layout:
   /etc/docker:
