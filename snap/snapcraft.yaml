@@ -141,10 +141,13 @@ parts:
       - -dockerd-patches/*
       - bin/*
       - config/daemon.json
+    build-snaps:
+      - go
 
   docker-cli:
+    after:
+       - wrapper-scripts
     plugin: make
-    build-snaps: ["go"]
     source: https://github.com/docker/cli.git
     source-tag: v18.09.3
     override-build: |
@@ -155,7 +158,7 @@ parts:
       export DISABLE_WARN_OUTSIDE_CONTAINER=1
 
       # setup the go build environment for docker-cli
-      . $SNAPCRAFT_STAGE/bin/go-build-helper.sh
+      . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
       gopartbootstrap github.com/docker/cli
 
       # build the docker cli binary
@@ -168,6 +171,8 @@ parts:
       install -T "$GOPATH/src/github.com/docker/cli/contrib/completion/bash/docker" "$SNAPCRAFT_PART_INSTALL/bin/docker-completion.sh"
 
   moby:
+    after:
+       - wrapper-scripts
     plugin: make
     # docker's engine repo is a fork of github.com/moby/moby that helpfully
     # has tags that correspond to docker-ce
@@ -204,8 +209,6 @@ parts:
 
       install -d "$SNAPCRAFT_PART_INSTALL/bin"
       install -T "$GOPATH/src/github.com/docker/engine/bundles/latest/dynbinary-daemon/dockerd" "$SNAPCRAFT_PART_INSTALL/bin/dockerd"
-    build-snaps: ["go"]
-    after: [wrapper-scripts]
     stage-packages:
       - zfsutils-linux
       - aufs-tools
@@ -227,13 +230,15 @@ parts:
       - libcurl4-openssl-dev
 
   containerd:
+    after:
+       - wrapper-scripts
     plugin: make
     source: https://github.com/containerd/containerd.git
     # from : https://github.com/docker/docker-ce/blob/v18.09.3/components/engine/hack/dockerfile/install/containerd.installer
     source-commit: e6b3f5632f50dbc4e9cb6288d911bf4f5e95b18e
     override-build: |
       # setup the go build environment for containerd
-      . $SNAPCRAFT_STAGE/bin/go-build-helper.sh
+      . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
       gopartbootstrap github.com/containerd/containerd
 
       make GIT_COMMIT= GIT_BRANCH= LDFLAGS=
@@ -242,34 +247,34 @@ parts:
       install -T bin/containerd "$SNAPCRAFT_PART_INSTALL/bin/containerd"
       install -T bin/containerd-shim "$SNAPCRAFT_PART_INSTALL/bin/containerd-shim"
       install -T bin/ctr "$SNAPCRAFT_PART_INSTALL/bin/ctr"
-    build-snaps: ["go"]
-    after: [wrapper-scripts]
 
   runc:
+    after:
+       - wrapper-scripts
     plugin: make
     source: https://github.com/opencontainers/runc.git
     # from https://github.com/docker/docker-ce/blob/v18.09.3/components/engine/hack/dockerfile/install/runc.installer
     source-commit: 6635b4f0c6af3810594d2770f662f34ddc15b40d
     override-build: |
       # setup the go build environment for runc
-      . $SNAPCRAFT_STAGE/bin/go-build-helper.sh
+      . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
       gopartbootstrap github.com/opencontainers/runc
 
       make BUILDTAGS='seccomp apparmor selinux' COMMIT=
 
       install -d "$SNAPCRAFT_PART_INSTALL/bin"
       install -T runc "$SNAPCRAFT_PART_INSTALL/bin/runc"
-    build-snaps: ["go"]
-    after: [wrapper-scripts]
 
   libnetwork:
+    after:
+       - wrapper-scripts
     plugin: make
     source: https://github.com/docker/libnetwork.git
     # from https://github.com/docker/docker-ce/blob/v18.09.3/components/engine/hack/dockerfile/install/proxy.installer
     source-commit: 2cfbf9b1f98162a55829a21cc603c76072a75382
     override-build: |
       # setup the go build environment for libnetwork
-      . $SNAPCRAFT_STAGE/bin/go-build-helper.sh
+      . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
       gopartbootstrap github.com/docker/libnetwork
 
       make build-local
@@ -277,8 +282,6 @@ parts:
       install -d "$SNAPCRAFT_PART_INSTALL/bin"
       install -T bin/docker-proxy "$SNAPCRAFT_PART_INSTALL/bin/docker-proxy"
       install -T bin/dnet "$SNAPCRAFT_PART_INSTALL/bin/dnet"
-    build-snaps: ["go"]
-    after: [wrapper-scripts]
 
   tini:
     plugin: cmake
