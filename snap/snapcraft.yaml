@@ -18,6 +18,7 @@ architectures:
 
 grade: stable
 confinement: strict
+base: core18
 
 passthrough:
   layout:
