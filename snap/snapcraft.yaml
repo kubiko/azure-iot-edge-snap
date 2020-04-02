@@ -131,14 +131,7 @@ parts:
     source: local-assets
     stage-packages:
       - mount
-    stage:
-      - bin/*
-      - dockerd-patches/*
-      - config/daemon.json
     prime:
-      - -bin/prep-dockerd-build.sh
-      - -bin/go-build-helper.sh
-      - -dockerd-patches/*
       - bin/*
       - config/daemon.json
     build-snaps:
