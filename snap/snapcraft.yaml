@@ -20,10 +20,9 @@ grade: stable
 confinement: strict
 base: core18
 
-passthrough:
-  layout:
-    /etc/docker:
-      bind: $SNAP_DATA/etc/docker
+layout:
+  /etc/docker:
+    bind: $SNAP_DATA/etc/docker
 
 plugs:
   home:
@@ -40,8 +39,8 @@ apps:
   iotedged:
     command: usr/bin/iotedged -c $SNAP_DATA/etc/iotedge/config.yaml
     daemon: simple
-    passthrough:
-      after: [dockerd]
+    after:
+      - dockerd
     plugs:
       - network
       - network-bind
