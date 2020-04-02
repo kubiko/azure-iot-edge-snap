@@ -149,10 +149,10 @@ parts:
        - wrapper-scripts
     plugin: make
     source: https://github.com/docker/cli.git
-    source-tag: v18.09.3
+    source-tag: v18.09.9
     override-build: |
       # docker build specific environment variables
-      export VERSION="18.09.03-ce"
+      export VERSION=$(git describe --tags  | cut -c 2-)
       export DOCKER_GITCOMMIT=$(git rev-parse --short HEAD)
       export GITCOMMIT=$DOCKER_GITCOMMIT
       export DISABLE_WARN_OUTSIDE_CONTAINER=1
@@ -177,7 +177,7 @@ parts:
     # docker's engine repo is a fork of github.com/moby/moby that helpfully
     # has tags that correspond to docker-ce
     source: https://github.com/docker/engine.git
-    source-tag: v18.09.3
+    source-tag: v18.09.9
     source-depth: 1
     override-pull: |
       snapcraftctl pull
@@ -218,7 +218,7 @@ parts:
   git:
     source: https://github.com/git/git
     source-type: git
-    source-tag: v2.19.0
+    source-tag: v2.19.1
     source-depth: 1
     plugin: autotools
     configflags:
@@ -234,8 +234,8 @@ parts:
        - wrapper-scripts
     plugin: make
     source: https://github.com/containerd/containerd.git
-    # from : https://github.com/docker/docker-ce/blob/v18.09.3/components/engine/hack/dockerfile/install/containerd.installer
-    source-commit: e6b3f5632f50dbc4e9cb6288d911bf4f5e95b18e
+    # from : https://github.com/docker/docker-ce/blob/v18.09.9/components/engine/hack/dockerfile/install/containerd.installer
+    source-commit: 894b81a4b802e4eb2a91d1ce216b8817763c29fb
     override-build: |
       # setup the go build environment for containerd
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
@@ -253,8 +253,8 @@ parts:
        - wrapper-scripts
     plugin: make
     source: https://github.com/opencontainers/runc.git
-    # from https://github.com/docker/docker-ce/blob/v18.09.3/components/engine/hack/dockerfile/install/runc.installer
-    source-commit: 6635b4f0c6af3810594d2770f662f34ddc15b40d
+    # from https://github.com/docker/docker-ce/blob/v18.09.9/components/engine/hack/dockerfile/install/runc.installer
+    source-commit: 425e105d5a03fabd737a126ad93d62a9eeede87f
     override-build: |
       # setup the go build environment for runc
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
@@ -270,8 +270,8 @@ parts:
        - wrapper-scripts
     plugin: make
     source: https://github.com/docker/libnetwork.git
-    # from https://github.com/docker/docker-ce/blob/v18.09.3/components/engine/hack/dockerfile/install/proxy.installer
-    source-commit: 2cfbf9b1f98162a55829a21cc603c76072a75382
+    # from https://github.com/docker/docker-ce/blob/v18.09.9/components/engine/hack/dockerfile/install/proxy.installer
+    source-commit: 55685ba49593e67f5e1c8180539379b16736c25e
     override-build: |
       # setup the go build environment for libnetwork
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
@@ -287,7 +287,7 @@ parts:
     plugin: cmake
     source: https://github.com/krallin/tini.git
     source-type: git
-    # from https://github.com/docker/docker-ce/blob/v18.09.3/components/engine/hack/dockerfile/install/tini.installer
+    # from https://github.com/docker/docker-ce/blob/v18.09.9/components/engine/hack/dockerfile/install/tini.installer
     source-commit: fec3683b971d9c3ef73f284f176672c44b448662
     organize:
       "bin/tini-static": bin/docker-init
