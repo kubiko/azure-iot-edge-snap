@@ -100,9 +100,9 @@ parts:
   iotedge:
     plugin: dump
     source: 
-      - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.0.6.1/iotedge_1.0.6.1-1_amd64.deb
-      - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.0.6.1/iotedge_1.0.6.1-1_armhf.deb
-      # - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.0.6.1/iotedge_1.0.6.1-1_amd64.deb
+      - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb
+      - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_armhf.deb
+      - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_arm64.deb
     stage-packages:
       - libgcc1
     override-build: |
@@ -123,9 +123,10 @@ parts:
   libiothsm:
     plugin: dump
     source: 
-      - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.0.6.1/libiothsm-std_1.0.6.1-1_amd64.deb
-      - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.0.6.1/libiothsm-std_1.0.6.1-1_armhf.deb
-      # - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.0.6.1/iotedge_1.0.6.1-1_amd64.deb
+      - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_amd64.deb
+      - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_armhf.deb
+      - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_arm64.deb
+
   wrapper-scripts:
     plugin: dump
     source: local-assets
