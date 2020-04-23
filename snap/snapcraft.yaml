@@ -177,7 +177,7 @@ parts:
     plugin: make
     # docker's engine repo is a fork of github.com/moby/moby that helpfully
     # has tags that correspond to docker-ce
-    source: https://github.com/docker/engine.git
+    source: https://github.com/moby/moby.git
     source-tag: v18.09.9
     source-depth: 1
     override-pull: |
