@@ -45,6 +45,8 @@ apps:
     daemon: simple
     after:
       - dockerd
+    environment:
+      LD_LIBRARY_PATH: ${SNAP_LIBRARY_PATH}:${LD_LIBRARY_PATH}:${SNAP}/lib:${SNAP}/usr/lib:${SNAP}/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}
     plugs:
       - network
       - network-bind
