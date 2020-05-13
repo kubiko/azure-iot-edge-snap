@@ -50,6 +50,7 @@ apps:
     plugs:
       - network
       - network-bind
+      - tpm
     sockets:
       workload:
         listen-stream: $SNAP_COMMON/run/workload.sock
