@@ -5,15 +5,16 @@
 gopartbootstrap() 
 {
     # first set the GOPATH to be in the current directory and in ".gopath"
-    GOPATH="$(pwd)/.gopath"
-    export GOPATH
+    export GOPATH="$PWD/.gopath"
+
     # setup path to include both $SNAPCRAFT_STAGE/bin and $GOPATH/bin
     # the former is for the go tools, as well as things like glide, etc.
     # while the later is for govendor, etc. and other go tools that might need to be installed
     export PATH="$SNAPCRAFT_STAGE/bin:$GOPATH/bin:$PATH"
+
     # set GOROOT to be whatever the go tool from SNAPCRAFT_STAGE/bin is
-    GOROOT=$(go env GOROOT)
-    export GOROOT
+    export GOROOT=$(go env GOROOT)
+
     # now setup the GOPATH for this part using the import path
     export GOIMPORTPATH="$GOPATH/src/$1"
     mkdir -p "$GOIMPORTPATH"
@@ -23,5 +24,5 @@ gopartbootstrap()
     cp -r ./* "$GOIMPORTPATH"
 
     # finally go into the go import path to prepare for building
-    cd "$GOIMPORTPATH" || exit
+    cd "$GOIMPORTPATH"
 }
