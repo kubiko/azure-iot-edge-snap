@@ -154,8 +154,9 @@ parts:
     after:
        - wrapper-scripts
     plugin: make
+    build-snaps: ['go/1.13/stable']
     source: https://github.com/docker/cli.git
-    source-tag: v18.09.9
+    source-tag: v19.03.11
     override-build: |
       # docker build specific environment variables
       export VERSION=$(git describe --tags  | cut -c 2-)
@@ -183,7 +184,7 @@ parts:
     # docker's engine repo is a fork of github.com/moby/moby that helpfully
     # has tags that correspond to docker-ce
     source: https://github.com/moby/moby.git
-    source-tag: v18.09.9
+    source-tag: v19.03.11
     source-depth: 1
     override-pull: |
       snapcraftctl pull
@@ -206,15 +207,17 @@ parts:
       #	pkcs11
       export AUTO_GOPATH=1
 
-      # setup the go build environment for docker/engine
+      # setup the go build environment for docker/docker
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
-      gopartbootstrap github.com/docker/engine
+      gopartbootstrap github.com/docker/docker
 
       # build the dockerd binary
       ./hack/make.sh dynbinary
 
       install -d "$SNAPCRAFT_PART_INSTALL/bin"
-      install -T "$GOPATH/src/github.com/docker/engine/bundles/latest/dynbinary-daemon/dockerd" "$SNAPCRAFT_PART_INSTALL/bin/dockerd"
+      install -T "$GOPATH/src/github.com/docker/docker/bundles/dynbinary-daemon/dockerd" "$SNAPCRAFT_PART_INSTALL/bin/dockerd"
+    # https://github.com/docker/engine/blob/v19.03.11/Dockerfile.simple (Docker-supported Go version for Engine)
+    build-snaps: ['go/1.13/stable']
     stage-packages:
       - zfsutils-linux
       - aufs-tools
@@ -240,8 +243,8 @@ parts:
        - wrapper-scripts
     plugin: make
     source: https://github.com/containerd/containerd.git
-    # from : https://github.com/docker/docker-ce/blob/v18.09.9/components/engine/hack/dockerfile/install/containerd.installer
-    source-commit: 894b81a4b802e4eb2a91d1ce216b8817763c29fb
+    # from : https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/containerd.installer
+    source-commit: 7ad184331fa3e55e52b890ea95e65ba581ae3429
     override-build: |
       # setup the go build environment for containerd
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
@@ -253,14 +256,15 @@ parts:
       install -T bin/containerd "$SNAPCRAFT_PART_INSTALL/bin/containerd"
       install -T bin/containerd-shim "$SNAPCRAFT_PART_INSTALL/bin/containerd-shim"
       install -T bin/ctr "$SNAPCRAFT_PART_INSTALL/bin/ctr"
+    build-snaps: ['go/1.13/stable']
 
   runc:
     after:
        - wrapper-scripts
     plugin: make
     source: https://github.com/opencontainers/runc.git
-    # from https://github.com/docker/docker-ce/blob/v18.09.9/components/engine/hack/dockerfile/install/runc.installer
-    source-commit: 425e105d5a03fabd737a126ad93d62a9eeede87f
+    # from https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/runc.installer
+    source-commit: dc9208a3303feef5b3839f4323d9beb36df0a9dd
     override-build: |
       # setup the go build environment for runc
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
@@ -270,14 +274,15 @@ parts:
 
       install -d "$SNAPCRAFT_PART_INSTALL/bin"
       install -T runc "$SNAPCRAFT_PART_INSTALL/bin/runc"
+    build-snaps: ['go/1.13/stable']
 
   libnetwork:
     after:
        - wrapper-scripts
     plugin: make
     source: https://github.com/docker/libnetwork.git
-    # from https://github.com/docker/docker-ce/blob/v18.09.9/components/engine/hack/dockerfile/install/proxy.installer
-    source-commit: 55685ba49593e67f5e1c8180539379b16736c25e
+    # from https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/proxy.installer
+    source-commit: 153d0769a1181bf591a9637fd487a541ec7db1e6
     override-build: |
       # setup the go build environment for libnetwork
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
@@ -288,15 +293,16 @@ parts:
       install -d "$SNAPCRAFT_PART_INSTALL/bin"
       install -T bin/docker-proxy "$SNAPCRAFT_PART_INSTALL/bin/docker-proxy"
       install -T bin/dnet "$SNAPCRAFT_PART_INSTALL/bin/dnet"
+    build-snaps: ['go/1.13/stable']
 
   tini:
     plugin: cmake
     source: https://github.com/krallin/tini.git
     source-type: git
-    # from https://github.com/docker/docker-ce/blob/v18.09.9/components/engine/hack/dockerfile/install/tini.installer
+    # from https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/tini.installer
     source-commit: fec3683b971d9c3ef73f284f176672c44b448662
     organize:
-      "bin/tini-static": bin/docker-init
+      'bin/tini-static': bin/docker-init
     prime:
       - -bin/tini
 
