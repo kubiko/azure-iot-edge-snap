@@ -29,6 +29,17 @@ layout:
 plugs:
   home:
     read: all
+  support:
+    interface: docker-support
+  privileged:
+    interface: docker-support
+    privileged-containers: true
+  docker-cli:
+    interface: docker
+
+slots:
+  docker-daemon:
+    interface: docker
 
 environment:
     LD_LIBRARY_PATH: ${SNAP_LIBRARY_PATH}:${LD_LIBRARY_PATH}:${SNAP}/lib:${SNAP}/usr/lib:${SNAP}/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}
@@ -53,6 +64,8 @@ apps:
       - network
       - network-bind
       - tpm
+      - docker-cli
+      - system-observe
     sockets:
       workload:
         listen-stream: $SNAP_COMMON/run/workload.sock
@@ -65,14 +78,15 @@ apps:
     command: docker
     environment:
       GIT_TEMPLATE_DIR: $SNAP/share/git-core/templates
-      GIT_CONFIG_NOSYSTEM: "true"
+      GIT_CONFIG_NOSYSTEM: 'true'
       GIT_EXEC_PATH: $SNAP/libexec/git-core
       GIT_TEXTDOMAINDIR: $SNAP/usr/share/locale
-      DOCKER_HOST: unix://$SNAP_COMMON/run/docker.sock
     completer: bin/docker-completion.sh
     plugs:
+      - docker-cli
       - network
       - home
+      - removable-media
 
   dockerd:
     command: bin/dockerd
@@ -104,9 +118,11 @@ apps:
       - serial-port
       - spi
       - system-observe
-    sockets:
-      docker-socket:
-        listen-stream: $SNAP_COMMON/run/docker.sock
+      - hardware-observe
+      - privileged
+      - support
+    slots:
+      - docker-daemon
 
 parts:
   iotedge:
