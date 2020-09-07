@@ -63,9 +63,14 @@ apps:
     plugs:
       - network
       - network-bind
+      - network-observe
       - tpm
       - docker-cli
       - system-observe
+      - mount-observe
+      - hardware-observe
+      - kubernetes-support
+      - greengrass-support
     sockets:
       workload:
         listen-stream: $SNAP_COMMON/run/workload.sock
