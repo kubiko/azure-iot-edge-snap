@@ -69,14 +69,15 @@ apps:
     after:
       - dockerd
     plugs:
+      - docker-cli
+      - hardware-observe
+      - mount-observe
       - network
       - network-bind
       - network-observe
-      - tpm
-      - docker-cli
       - system-observe
-      - mount-observe
-      - hardware-observe
+      - timezone-control
+      - tpm
       - kubernetes-support
       - greengrass-support
     sockets:
