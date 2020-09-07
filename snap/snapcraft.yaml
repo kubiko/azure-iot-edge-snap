@@ -174,8 +174,6 @@ parts:
       - go
 
   docker-cli:
-    after:
-       - wrapper-scripts
     plugin: make
     build-snaps: ['go/1.13/stable']
     source: https://github.com/docker/cli.git
@@ -201,8 +199,6 @@ parts:
       install -T "$GOPATH/src/github.com/docker/cli/contrib/completion/bash/docker" "$SNAPCRAFT_PART_INSTALL/bin/docker-completion.sh"
 
   moby:
-    after:
-       - wrapper-scripts
     plugin: make
     # docker's engine repo is a fork of github.com/moby/moby that helpfully
     # has tags that correspond to docker-ce
@@ -262,8 +258,6 @@ parts:
       - libcurl4-openssl-dev
 
   containerd:
-    after:
-       - wrapper-scripts
     plugin: make
     source: https://github.com/containerd/containerd.git
     # from : https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/containerd.installer
@@ -282,8 +276,6 @@ parts:
     build-snaps: ['go/1.13/stable']
 
   runc:
-    after:
-       - wrapper-scripts
     plugin: make
     source: https://github.com/opencontainers/runc.git
     # from https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/runc.installer
@@ -300,8 +292,6 @@ parts:
     build-snaps: ['go/1.13/stable']
 
   libnetwork:
-    after:
-       - wrapper-scripts
     plugin: make
     source: https://github.com/docker/libnetwork.git
     # from https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/proxy.installer
