@@ -11,7 +11,7 @@ The snap includes a version of docker, using slightly modified sources from the 
 The snap is built with snapcraft. To build the snap:
 
 ```bash
-git clone 
+git clone
 snapcraft
 ```
 
@@ -23,7 +23,7 @@ To install the snap use `--dangerous` for now:
 sudo snap install --dangerous azure-iot-edge*.snap
 ```
 
-After installation there will be 2 services in the snap, `dockerd` and `iotedged`. The `dockerd` daemon should can start fine, but currently won't have auto-connections for the various interfaces it needs to run, and as such is disabled by the install hook. So after installation, the interfaces need to be connected, then the daemon can be started. Additionally, the `iotedged` daemon should be disabled by the install hook because it doesn't have proper credentials inside the config file for `iotedged`. However, there is currently a bug with snapd where services that declare they have a unix socket they listen on are always started after the install hook. See this [forum post](https://forum.snapcraft.io/t/how-to-manage-services-with-sockets-timers/7904) for more info. The install still seems to succeed even though the `iotedged` service fails immediately. 
+After installation there will be 2 services in the snap, `dockerd` and `iotedged`. The `dockerd` daemon should can start fine, but currently won't have auto-connections for the various interfaces it needs to run, and as such is disabled by the install hook. So after installation, the interfaces need to be connected, then the daemon can be started. Additionally, the `iotedged` daemon should be disabled by the install hook because it doesn't have proper credentials inside the config file for `iotedged`. However, there is currently a bug with snapd where services that declare they have a unix socket they listen on are always started after the install hook. See this [forum post](https://forum.snapcraft.io/t/how-to-manage-services-with-sockets-timers/7904) for more info. The install still seems to succeed even though the `iotedged` service fails immediately.
 
 After the snap has been installed connect the following interfaces as minimum:
 
@@ -42,10 +42,10 @@ sudo snap services azure-iot-edge
 Now that `dockerd` is running successfully, you will need to provide your connection string obtained from Azure when you setup the hub so that `iotedged` can make a connection to Azure. The connection string (unquoted) should be put into a file and provide the file to the snap with `snap set` as shown below:
 
 ```bash
-sudo snap set azure-iot-edge cs-file=/path/to/the/file
+sudo snap set azure-iot-edge connection-string="<connection string>"
 ```
 
-Note that the `home` interface is declared with `read: all` attribute, which means that when connected, root users in the snap can read from any user's home folder. This means that after connecting the home interface above, you can specify the `cs-file` as being anywhere in your `$HOME` directory.
+Note that connection string will be read from snap configuration and stored into iotedge config.yaml. After connection string is removed from snap configuration so it cannot be read from there.
 
 This will add your connection string to the config file and automatically start the service running. After that you should be able to see the modules you added to the device running successfully with the `iotedge` command in the snap:
 
