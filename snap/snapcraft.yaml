@@ -326,6 +326,17 @@ parts:
     prime:
       - -bin/tini
 
+  yq:
+    plugin: go
+    go-channel: 1.14/stable
+    source: https://github.com/mikefarah/yq.git
+    source-type: git
+    go-importpath: github.com/mikefarah/yq
+    override-pull: |
+      snapcraftctl pull
+      # use latest tag, this should represent last stable release
+      git checkout $(git describe --abbrev=0 --tags)
+
 build-packages:
   - build-essential
   - btrfs-tools
