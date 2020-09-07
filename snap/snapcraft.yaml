@@ -53,9 +53,13 @@ apps:
     environment:
       IOTEDGE_HOST: unix://$SNAP_COMMON/run/mgmt.sock
     plugs:
+      - docker-cli
+      - hardware-observe
+      - mount-observe
       - network
       - network-bind
       - system-observe
+      - greengrass-support
 
   iotedged:
     command: usr/bin/iotedged -c $SNAP_DATA/etc/iotedge/config.yaml
