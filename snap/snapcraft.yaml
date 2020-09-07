@@ -62,7 +62,9 @@ apps:
       - greengrass-support
 
   iotedged:
-    command: usr/bin/iotedged -c $SNAP_DATA/etc/iotedge/config.yaml
+    command: usr/bin/iotedged
+    command-chain:
+      - bin/iotedged-wrapper.sh
     daemon: simple
     after:
       - dockerd
