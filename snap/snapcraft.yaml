@@ -91,7 +91,7 @@ apps:
         socket-mode: 0666
 
   docker:
-    command: docker
+    command: bin/docker
     environment:
       GIT_TEMPLATE_DIR: $SNAP/share/git-core/templates
       GIT_CONFIG_NOSYSTEM: 'true'
