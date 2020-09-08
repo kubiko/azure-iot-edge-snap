@@ -1,0 +1,13 @@
+diff --git a/hack/make/.go-autogen b/hack/make/.go-autogen
+index d107500..c84c2d4 100644
+--- a/hack/make/.go-autogen
++++ b/hack/make/.go-autogen
+@@ -16,7 +16,7 @@ package dockerversion
+ // This file is overridden on build with build-time information.
+ const (
+ 	GitCommit             string = "$GITCOMMIT"
+-	Version               string = "$VERSION"
++	Version               string = "${VERSION}+azure"
+ 	BuildTime             string = "$BUILDTIME"
+ 	IAmStatic             string = "${IAMSTATIC:-true}"
+ 	PlatformName          string = "${PLATFORM}"
