@@ -142,6 +142,8 @@ apps:
 parts:
   iotedge:
     plugin: dump
+    after:
+      - libiothsm
     source:
       - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb
       - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_armhf.deb
