@@ -177,11 +177,7 @@ parts:
     source: local-assets
     stage-packages:
       - mount
-    prime:
-      - bin/*
-      - config/daemon.json
-    build-snaps:
-      - go
+      - jq
 
   docker-cli:
     plugin: make

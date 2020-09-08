@@ -54,15 +54,14 @@ done
 rm -rf "$dir"
 trap - EXIT
 
-# modify XDG_RUNTIME_DIR to be a snap writable dir underneath $SNAP_COMMON 
+# modify XDG_RUNTIME_DIR to be a snap writable dir underneath $SNAP_COMMON
 # until LP #1656340 is fixed
 export XDG_RUNTIME_DIR=$SNAP_COMMON/run
 
 # use SNAP_DATA for most "data" bits
 mkdir -p \
-	"$SNAP_DATA/run" \
-	"$SNAP_DATA/run/docker" \
-	"$SNAP_COMMON/var-lib-docker" \
+	"/run/docker" \
+	"$SNAP_COMMON/var/lib/docker" \
 	"$XDG_RUNTIME_DIR"
 
 check_connected_interfaces
@@ -71,9 +70,12 @@ workaround_lp1606510
 
 workaround_apparmor_profile_reload
 
+# make sure we have up to date docker daemon config file
+snapctl get -d docker.daemon | jq .[] > "${SNAP_DATA}/etc/docker/daemon.json"
+
 exec "$@" \
 	--group "$default_socket_group" \
-	--exec-root="$SNAP_DATA/run/docker" \
-	--data-root="$SNAP_COMMON/var-lib-docker" \
-	--pidfile="$SNAP_DATA/run/docker.pid" \
-	--config-file="$SNAP_DATA/config/daemon.json"
+	--exec-root="/run/docker" \
+	--data-root="/var/lib/docker" \
+	--pidfile="/run/docker/docker.pid" \
+	--config-file="/etc/docker/daemon.json"
