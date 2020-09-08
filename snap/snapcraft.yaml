@@ -267,7 +267,9 @@ parts:
     plugin: make
     source: https://github.com/containerd/containerd.git
     # from : https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/containerd.installer
-    source-commit: 7ad184331fa3e55e52b890ea95e65ba581ae3429
+    # source-commit: 7ad184331fa3e55e52b890ea95e65ba581ae3429
+    # version aligned with Azure own releases
+    source-tag: v1.3.7
     override-build: |
       # setup the go build environment for containerd
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
@@ -285,7 +287,9 @@ parts:
     plugin: make
     source: https://github.com/opencontainers/runc.git
     # from https://github.com/docker/docker-ce/blob/v19.03.11/components/engine/hack/dockerfile/install/runc.installer
-    source-commit: dc9208a3303feef5b3839f4323d9beb36df0a9dd
+    # source-commit: dc9208a3303feef5b3839f4323d9beb36df0a9dd
+    # version aligned with Azure own releases
+    source-tag: v1.0.0-rc92
     override-build: |
       # setup the go build environment for runc
       . ${SNAPCRAFT_PROJECT_DIR}/go-build-helper.sh
