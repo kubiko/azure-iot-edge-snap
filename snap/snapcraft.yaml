@@ -80,7 +80,6 @@ apps:
       - system-observe
       - timezone-control
       - tpm
-      - kubernetes-support
       - greengrass-support
     sockets:
       workload:
