@@ -27,6 +27,8 @@ layout:
     bind: $SNAP_DATA/etc/iotedge
   /var/lib/iotedge:
     bind: $SNAP_COMMON/var/lib/iotedge
+  /var/lib/docker:
+    bind: $SNAP_COMMON/var/lib/docker
 
 plugs:
   home:
