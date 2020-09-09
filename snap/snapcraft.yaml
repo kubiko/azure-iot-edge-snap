@@ -150,9 +150,9 @@ parts:
     after:
       - libiothsm
     source:
-      - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.1.0/iotedge_1.1.0-1_ubuntu18.04_amd64.deb
-      - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.1.0/iotedge_1.1.0-1_ubuntu18.04_armhf.deb
-      - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.1.0/iotedge_1.1.0-1_ubuntu18.04_arm64.deb
+      - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.2.0-rc4/aziot-edge_1.2.0_rc4-1_ubuntu18.04_amd64.deb
+      - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.2.0-rc4/aziot-edge_1.2.0_rc4-1_ubuntu18.04_armhf.deb
+      - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.2.0-rc4/aziot-edge_1.2.0_rc4-1_ubuntu18.04_arm64.deb
     stage-packages:
       - libgcc1
     override-build: |
@@ -173,9 +173,9 @@ parts:
   libiothsm:
     plugin: dump
     source:
-      - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.1.0/libiothsm-std_1.1.0-1_ubuntu18.04_amd64.deb
-      - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.1.0/libiothsm-std_1.1.0-1_ubuntu18.04_armhf.deb
-      - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.1.0/libiothsm-std_1.1.0-1_ubuntu18.04_arm64.deb
+      - on amd64: https://github.com/Azure/azure-iotedge/releases/download/1.2.0-rc4/aziot-identity-service_1.2.0_rc4-1_ubuntu-18.04_amd64.deb
+      - on armhf: https://github.com/Azure/azure-iotedge/releases/download/1.2.0-rc4/aziot-identity-service_1.2.0_rc4-1_ubuntu-18.04_armhf.deb
+      - on arm64: https://github.com/Azure/azure-iotedge/releases/download/1.2.0-rc4/aziot-identity-service_1.2.0_rc4-1_ubuntu-18.04_arm64.deb
 
   wrapper-scripts:
     plugin: dump
