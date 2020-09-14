@@ -35,9 +35,7 @@ layout:
 plugs:
   home:
     read: all
-  support:
-    interface: docker-support
-  privileged:
+  docker-support-privileged:
     interface: docker-support
     privileged-containers: true
   docker-cli:
@@ -59,11 +57,11 @@ apps:
     plugs:
       - docker-cli
       - hardware-observe
+      - home
       - mount-observe
       - network
       - network-bind
       - system-observe
-      - greengrass-support
 
   iotedged:
     command: usr/bin/iotedged
@@ -75,14 +73,15 @@ apps:
     plugs:
       - docker-cli
       - hardware-observe
+      - home
       - mount-observe
       - network
       - network-bind
       - network-observe
+      - network-control
       - system-observe
       - timezone-control
       - tpm
-      - greengrass-support
     sockets:
       workload:
         listen-stream: $SNAP_COMMON/run/workload.sock
@@ -115,6 +114,7 @@ apps:
       - bluez
       - camera
       - docker-support
+      - docker-support-privileged
       - dvb
       - firewall-control
       - gpio
@@ -136,8 +136,6 @@ apps:
       - spi
       - system-observe
       - hardware-observe
-      - privileged
-      - support
     slots:
       - docker-daemon
 
