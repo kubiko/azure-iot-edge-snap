@@ -183,7 +183,7 @@ parts:
     plugin: make
     build-snaps: ['go/1.13/stable']
     source: https://github.com/docker/cli.git
-    source-tag: v19.03.11
+    source-tag: v19.03.13
     override-build: |
       # docker build specific environment variables
       export VERSION=$(git describe --tags  | cut -c 2-)
@@ -209,7 +209,7 @@ parts:
     # docker's engine repo is a fork of github.com/moby/moby that helpfully
     # has tags that correspond to docker-ce
     source: https://github.com/moby/moby.git
-    source-tag: v19.03.11
+    source-tag: v19.03.13
     source-depth: 1
     override-pull: |
       snapcraftctl pull
