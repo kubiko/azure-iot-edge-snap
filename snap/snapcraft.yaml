@@ -81,6 +81,8 @@ apps:
       - network-control
       - system-observe
       - timezone-control
+      - timeserver-control
+      - time-control
       - tpm
     sockets:
       workload:
@@ -136,6 +138,9 @@ apps:
       - spi
       - system-observe
       - hardware-observe
+      - timezone-control
+      - timeserver-control
+      - time-control
     slots:
       - docker-daemon
 
