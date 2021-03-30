@@ -17,7 +17,7 @@ update_connection_string() {
 	local cs=$(snapctl get connection-string)
 	if [ -n "${cs}" ]; then
 		${SNAP}/bin/yq eval -i \
-			'.provisioning.device_connection_string = "${cs}" \
+			".provisioning.device_connection_string = \"$cs\"" \
 			${SNAP_DATA}/etc/iotedge/config.yaml
 
 		# unset string from snap config
@@ -27,8 +27,9 @@ update_connection_string() {
 
 update_host_name() {
 	# update device host name in iotedge config.yaml
-	${SNAP}/bin/yq eval -i '.hostname = "${HOSTNAME}"' \
-		${SNAP_DATA}/etc/iotedge/config.yaml
+        ${SNAP}/bin/yq eval -i \
+                '.hostname = \"$HOSTNAME\"" \
+                ${SNAP_DATA}/etc/iotedge/config.yaml
 }
 
 # update config if needed
