@@ -19,14 +19,14 @@ mkdir -p "$SNAP_COMMON/run"
 mkdir -p "$SNAP_DATA/etc/docker"
 # write new config file based on template
 ${SNAP}/bin/yq eval \
-   '
-    .homedir = "${SNAP_COMMON}/var/lib/iotedge" |
-    .connect.management_uri = "unix://${SNAP_COMMON}/run/mgmt.sock" |
-    .connect.workload_uri = "unix://${SNAP_COMMON}/run/workload.sock" |
-    .listen.management_uri = "unix://${SNAP_COMMON}/run/mgmt.sock" |
-    .listen.workload_uri = "unix://${SNAP_COMMON}/run/workload.sock" |
-    .hostname = "${HOSTNAME}"
-   ' \
+   "
+    .homedir = \"${SNAP_COMMON}/var/lib/iotedge\" |
+    .connect.management_uri = \"unix://${SNAP_COMMON}/run/mgmt.sock\" |
+    .connect.workload_uri = \"unix://${SNAP_COMMON}/run/workload.sock\" |
+    .listen.management_uri = \"unix://${SNAP_COMMON}/run/mgmt.sock\" |
+    .listen.workload_uri = \"unix://${SNAP_COMMON}/run/workload.sock\" |
+    .hostname = \"${HOSTNAME}\"
+   " \
   "${SNAP}/etc/iotedge/config.yaml.template" \
     > "${SNAP_DATA}/etc/iotedge/config.yaml"
 
