@@ -28,7 +28,7 @@ update_connection_string() {
 update_host_name() {
 	# update device host name in iotedge config.yaml
         ${SNAP}/bin/yq eval -i \
-                '.hostname = \"$HOSTNAME\"" \
+                ".hostname = \"$HOSTNAME\"" \
                 ${SNAP_DATA}/etc/iotedge/config.yaml
 }
 
